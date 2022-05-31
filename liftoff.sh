@@ -4,7 +4,7 @@
 # a development daemon.
 
 # Cute little introduction.
-echo "🚀 🚀 🚀"
+echo "🚀 🚀 🚀 🚀"
 echo "Hi, I'm Launchpad :) I'll do my best to set up your machine for rover development."
 
 if [[ -z $PKG_MAN ]]; then
