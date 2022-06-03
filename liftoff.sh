@@ -111,6 +111,12 @@ for name in launchpad terra phobos-gui phobos-cli micro;
         fi
     done
 
+# Pull down cornellmarsrover/daemon:latest
+
+echo ""
+echo "Pulling down the daemon image (latest)..."
+docker pull cornellmarsrover/daemon:latest
+
 # Install Phobos CLI from Launchpad's bundled wheel.
 
 # Use "find" to find the wheel file included in Launchpad.
