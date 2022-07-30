@@ -1,7 +1,7 @@
 #!/bin/bash
 # The liftoff script will create a CMR development directory and bootstrap it with the entire
-# codebase from each code repository. It will then install the command line interface and spin up
-# a development daemon.
+# codebase from each code repository. It will then install the command line interface and download
+# CMR Docker images.
 
 # Cute little introduction.
 echo "🚀 🚀 🚀 🚀"
