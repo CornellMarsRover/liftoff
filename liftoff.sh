@@ -5,11 +5,11 @@
 
 # Cute little introduction.
 echo "🚀 🚀 🚀 🚀"
-echo "Hi, I'm Launchpad :) I'll do my best to set up your machine for rover development."
+echo "Hi, I'm Terraformer :) I'll do my best to set up your machine for rover development."
 
 if [[ -z $PKG_MAN ]]; then
     # If the user didn't specify a package manager, try to detect it based on the OS.
-    # Launchpad only supports Ubuntu (including on Windows via WSL) and macOS, so only check for those.
+    # terraformer only supports Ubuntu (including on Windows via WSL) and macOS, so only check for those.
     if [[ "$OSTYPE" == "darwin"* ]]; then
         # macOS
         PKG_MAN="brew"
@@ -48,7 +48,7 @@ command -v git >/dev/null 2>&1 ||
 }
 
 # Make sure Docker is installed, and tell the user to install it if not.
-# Launchpad won't try to install Docker itself because the installation is often not trivial.
+# terraformer won't try to install Docker itself because the installation is often not trivial.
 command -v docker >/dev/null 2>&1 ||
 { echo "!!!! ERROR !!!!"
   echo "Docker is not installed."
@@ -99,7 +99,7 @@ pushd $CMR_ROOT &> /dev/null
 echo ""
 echo "Cloning CMR repositories into $CMR_ROOT:"
 
-for name in launchpad terra phobos-gui phobos-cli micro;
+for name in terraformer terra phobos-gui phobos-cli micro;
     do
         if [ -d "$CMR_ROOT/$name" ]; then echo "You already have $name, skipping..."
         else 
@@ -117,10 +117,10 @@ echo ""
 echo "Pulling down the daemon image (latest)..."
 docker pull cornellmarsrover/daemon:latest
 
-# Install Phobos CLI from Launchpad's bundled wheel.
+# Install Phobos CLI from terraformer's bundled wheel.
 
-# Use "find" to find the wheel file included in Launchpad.
-CLI_WHEEL_PATH=$(find launchpad/dist -name "*.whl")
+# Use "find" to find the wheel file included in terraformer.
+CLI_WHEEL_PATH=$(find terraformer/dist -name "*.whl")
 CLI_WHEEL_PATH="$CMR_ROOT/$CLI_WHEEL_PATH"
 # Get the CLI version using "awk", which looks for the version number between two dashes (-).
 # We only do this for the user's sake, so that they know which version they're getting.
