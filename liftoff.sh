@@ -68,18 +68,38 @@ command -v python3 >/dev/null 2>&1 ||
   fi
 }
 
+# Make sure Pip is installed and try to install it if not
+command -v pip >/dev/null 2>&1 ||
+{ echo "Pip is not installed. Attempting to install..."
+  eval "$PKG_MAN install pip"
+  if [[ $? -ne 0 ]]; then
+    echo "Failed to install Pip using $PKG_MAN. Aborting."
+    exit 1
+ fi
+}
+
 # Make sure we have our SSH key set up with GitHub
 ssh -T git@github.com &> /dev/null
 SSH_KEY_WORKS=$?
 if [ $SSH_KEY_WORKS -ne 1 ]; then
-    echo "!!!! ERROR !!!!"
-    echo "Failed to reach GitHub via SSH. Make sure you set up your SSH key correctly."
-    echo "See the following guides for help, and then try running Liftoff again:"
-    echo ""
-    echo "(1) Creating an SSH key: https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent"
-    echo ""
-    echo "(2) Adding an SSH key to GitHub: https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account"
-    exit 1
+    echo "Adding SSH key for github"
+    if [ ! -f ~/.ssh/id_rsa ]; then
+        read -p "Enter github email: " email
+        echo "Using email $email"
+        eval `ssh-agent`
+        ssh-keygen -t rsa -b 4096 -C $email
+        ssh-add ~/.ssh/id_rsa
+    fi
+    curl -fsSL https://raw.githubusercontent.com/CornellMarsRover/liftoff/main/github-keygen.py -o github-keygen.py
+    pub=`cat ~/.ssh/id_rsa.pub`
+    pip install requests
+    python3 github-keygen.py "$pub"
+    KEY_ADD_SUCCESS = $?
+    if [ $KEY_ADD_SUCCESS == 0 ]; then
+        echo "Successfully added ssh key"
+    else
+        exit $KEY_ADD_SUCCESS
+    fi
 fi
 
 # Check if CMR_ROOT is set and set to its default if not.
