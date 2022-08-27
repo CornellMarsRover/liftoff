@@ -156,6 +156,22 @@ fi
 echo "(end pip output)"
 echo "Done installing Phobos CLI v$CLI_VERSION."
 
+# Install the git hook tool pre-commit
+command -v pre-commit >/dev/null 2>&1 ||
+{ echo "Pre-commit is not installed. Attempting to install..."
+  eval "pip install pre-commit"
+  if [[ $? -ne 0 ]]; then
+    echo "Failed to pip install pre-commit. Aborting"
+    exit 1
+ fi
+
+ # Install the hooks
+ pushd "$CMR_ROOT/terra" &> /dev/null
+ pre-commit install
+ pre-commit install --hook pre-pushd
+ popd &> /dev/null
+}
+
 if [[ ! -z $PATH_HELP ]]; then
     echo ""
     echo "!!!! IMPORTANT !!!!"
