@@ -168,7 +168,7 @@ command -v pre-commit >/dev/null 2>&1 ||
  # Install the hooks
  pushd "$CMR_ROOT/terra" &> /dev/null
  pre-commit install
- pre-commit install --hook pre-pushd
+ pre-commit install --hook pre-push
  popd &> /dev/null
 }
 
