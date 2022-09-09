@@ -94,7 +94,7 @@ if [ $SSH_KEY_WORKS -ne 1 ]; then
     pub=`cat ~/.ssh/id_rsa.pub`
     pip install requests
     python3 github-keygen.py "$pub"
-    KEY_ADD_SUCCESS = $?
+    KEY_ADD_SUCCESS=$?
     if [ $KEY_ADD_SUCCESS == 0 ]; then
         echo "Successfully added ssh key"
     else
