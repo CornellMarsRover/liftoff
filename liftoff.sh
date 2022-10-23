@@ -140,11 +140,11 @@ for name in terraformer terra phobos-gui phobos-cli micro;
         fi
     done
 
-# Pull down cornellmarsrover/daemon:latest
+# Pull down cornellmarsrover/dev:latest
 
 echo ""
-echo "Pulling down the daemon image (latest)..."
-docker pull cornellmarsrover/daemon:latest
+echo "Pulling down the dev image (latest)..."
+docker pull cornellmarsrover/dev:latest
 
 # Install Phobos CLI from terraformer's bundled wheel.
 
