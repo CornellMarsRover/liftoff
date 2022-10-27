@@ -148,6 +148,11 @@ docker pull cornellmarsrover/dev:latest
 
 # Install Phobos CLI from terraformer's bundled wheel.
 
+# Make sure the repository is latest.
+pushd $CMR_ROOT/terraformer &> /dev/null
+git pull
+popd &> /dev/null
+
 # Use "find" to find the wheel file included in terraformer.
 CLI_WHEEL_PATH=$(find terraformer/dist -name "*.whl")
 CLI_WHEEL_PATH="$CMR_ROOT/$CLI_WHEEL_PATH"
