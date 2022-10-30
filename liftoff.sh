@@ -25,7 +25,7 @@ if [[ -z $PKG_MAN ]]; then
     else
         # Unsupported OS
         echo "Your detected operating system ($OSTYPE) is not supported."
-        exit 1
+        return 1
     fi
     echo "Since \$PKG_MAN was not set, I'll use the auto-detected package manager: $PKG_MAN"
 fi
@@ -34,7 +34,7 @@ fi
 eval $PKG_MAN &> /dev/null
 if [[ $? == 127 ]]; then
     echo "$PKG_MAN was not found. Aborting."
-    exit 1
+    return 1
 fi
 
 # Make sure git is installed, and try to install it if not.
@@ -43,7 +43,7 @@ command -v git >/dev/null 2>&1 ||
   eval "$PKG_MAN install git"
   if [[ $? -ne 0 ]]; then
     echo "Failed to install Git using $PKG_MAN. Aborting."
-    exit 1
+    return 1
   fi
 }
 
@@ -53,7 +53,7 @@ command -v xpra >/dev/null 2>&1 ||
   echo "Xpra is not installed."
   echo "I can't install it for you because the setup process varies for different systems."
   echo "See this documentation article for steps: https://github.com/Xpra-org/xpra/wiki/Download"
-  exit 1
+  return 1
 }
 
 # Make sure Docker is installed, and tell the user to install it if not.
@@ -64,7 +64,7 @@ command -v docker >/dev/null 2>&1 ||
   echo "I can't install it for you because the setup process varies for different systems."
   # TODO: Update this documentation link to the Docker installation page once it's created.
   echo "See this documentation article for steps: https://docs.cornellmarsrover.org/"
-  exit 1
+  return 1
 }
 
 # Make sure Python 3 is installed and try to install it if not.
@@ -73,7 +73,7 @@ command -v python3 >/dev/null 2>&1 ||
   eval "$PKG_MAN install python3"
   if [[ $? -ne 0 ]]; then
     echo "Failed to install Python 3 using $PKG_MAN. Aborting."
-    exit 1
+    return 1
   fi
 }
 
@@ -83,7 +83,7 @@ command -v pip >/dev/null 2>&1 ||
   eval "$PKG_MAN install pip"
   if [[ $? -ne 0 ]]; then
     echo "Failed to install Pip using $PKG_MAN. Aborting."
-    exit 1
+    return 1
  fi
 }
 
@@ -107,7 +107,7 @@ if [ $SSH_KEY_WORKS -ne 1 ]; then
     if [ $KEY_ADD_SUCCESS == 0 ]; then
         echo "Successfully added ssh key"
     else
-        exit $KEY_ADD_SUCCESS
+        return $KEY_ADD_SUCCESS
     fi
 fi
 
@@ -165,7 +165,7 @@ echo "(start pip output)"
 python3 -m pip install --disable-pip-version-check --force-reinstall "$CLI_WHEEL_PATH"
 if [[ $? -ne 0 ]]; then
     echo "Failed to install Phobos CLI. Aborting."
-    exit 1
+    return 1
 fi
 echo "(end pip output)"
 echo "Done installing Phobos CLI v$CLI_VERSION."
@@ -176,7 +176,7 @@ command -v pre-commit >/dev/null 2>&1 ||
   eval "pip install pre-commit"
   if [[ $? -ne 0 ]]; then
     echo "Failed to pip install pre-commit. Aborting"
-    exit 1
+    return 1
  fi
 
  # Install the hooks
