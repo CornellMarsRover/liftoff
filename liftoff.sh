@@ -128,7 +128,7 @@ pushd $CMR_ROOT &> /dev/null
 echo ""
 echo "Cloning CMR repositories into $CMR_ROOT:"
 
-for name in terraformer terra phobos-gui phobos-cli micro;
+for name in terraformer terra phobos-gui phobos-cli micro playground;
     do
         if [ -d "$CMR_ROOT/$name" ]; then echo "You already have $name, skipping..."
         else 
