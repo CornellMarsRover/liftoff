@@ -134,7 +134,7 @@ for name in terraformer terra phobos-gui phobos-cli micro playground;
         else 
             echo "Cloning $name from remote..."
             echo "(start git output)"
-            git clone "git@github.com:CornellMarsRover/$name.git"
+            git clone --recurse-submodules "git@github.com:CornellMarsRover/$name.git"
             echo "(end git output)"
             echo "Done cloning $name from remote."
         fi
