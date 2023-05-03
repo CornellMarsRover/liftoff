@@ -53,7 +53,8 @@ command -v xpra >/dev/null 2>&1 ||
   echo "Xpra is not installed."
   echo "I can't install it for you because the setup process varies for different systems."
   echo "See this documentation article for steps: https://github.com/Xpra-org/xpra/wiki/Download"
-  return 1
+  echo "*** IF YOU DO NOT INSTALL XPRA, YOU WILL NOT BE ABLE TO USE GUI-ENABLED SHELLS ***"
+  echo "Continuing..."
 }
 
 # Make sure Docker is installed, and tell the user to install it if not.
