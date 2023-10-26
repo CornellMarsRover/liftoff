@@ -91,21 +91,23 @@ command -v pip >/dev/null 2>&1 ||
 # Make sure we have our SSH key set up with GitHub
 ssh -T git@github.com &> /dev/null
 SSH_KEY_WORKS=$?
-if [ $SSH_KEY_WORKS -ne 1 ]; then
+if [[ $SSH_KEY_WORKS -ne 1 ]]; then
     echo "Adding SSH key for github"
     if [ ! -f ~/.ssh/id_rsa ]; then
-        read -p "Enter github email: " email
+        echo "Enter github email: " 
+        read email
         echo "Using email $email"
         eval `ssh-agent`
         ssh-keygen -t rsa -b 4096 -C $email
         ssh-add ~/.ssh/id_rsa
+        unset email
     fi
     curl -fsSL https://raw.githubusercontent.com/CornellMarsRover/liftoff/main/github-keygen.py -o github-keygen.py
     pub=`cat ~/.ssh/id_rsa.pub`
     pip install requests
     python3 github-keygen.py "$pub"
     KEY_ADD_SUCCESS=$?
-    if [ $KEY_ADD_SUCCESS == 0 ]; then
+    if [[ $KEY_ADD_SUCCESS -eq 0 ]]; then
         echo "Successfully added ssh key"
     else
         return $KEY_ADD_SUCCESS
